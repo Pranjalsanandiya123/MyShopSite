@@ -8,19 +8,21 @@ using System.Threading.Tasks;
 
 namespace MyShop.DataAccess.InMemory
 {
-    class PublicRepository
+
+    public class ProductRepository
     {
         ObjectCache cache = MemoryCache.Default;
         List<Product> products;
 
-        public PublicRepository()
+        public ProductRepository()
         {
             products = cache["products"] as List<Product>;
-            if (products==null)
+            if (products == null)
             {
                 products = new List<Product>();
             }
         }
+
         public void Commit()
         {
             cache["products"] = products;
@@ -34,27 +36,31 @@ namespace MyShop.DataAccess.InMemory
         public void Update(Product product)
         {
             Product productToUpdate = products.Find(p => p.Id == product.Id);
-            if (productToUpdate!=null)
+
+            if (productToUpdate != null)
             {
                 productToUpdate = product;
             }
             else
             {
-                throw new Exception("Product not found!");
+                throw new Exception("Product no found");
             }
         }
-        public Product find(string Id)
+
+        public Product Find(string Id)
         {
             Product product = products.Find(p => p.Id == Id);
+
             if (product != null)
             {
                 return product;
             }
             else
             {
-                throw new Exception("Product not found!");
-            } 
+                throw new Exception("Product no found");
+            }
         }
+
         public IQueryable<Product> Collection()
         {
             return products.AsQueryable();
@@ -63,13 +69,14 @@ namespace MyShop.DataAccess.InMemory
         public void Delete(string Id)
         {
             Product productToDelete = products.Find(p => p.Id == Id);
+
             if (productToDelete != null)
             {
                 products.Remove(productToDelete);
             }
             else
             {
-                throw new Exception("Product not found!");
+                throw new Exception("Product no found");
             }
         }
     }

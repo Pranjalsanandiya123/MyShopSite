@@ -18,7 +18,7 @@ namespace MyShop.DataAccess.InMemory
 
         public InMemoryRepository()
         {
-            className = typeof(T).Name;   //className takes the name of provided classname by T
+            className = typeof(T).Name;   //className variable takes the name of provided classname by T
             items = cache[className] as List<T>; //Checks whether something is inside cache or not
             if (items == null)
             {
